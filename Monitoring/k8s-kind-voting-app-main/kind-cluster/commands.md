@@ -178,7 +178,10 @@ kubectl port-forward svc/kind-prometheus-kube-prome-prometheus -n monitoring 909
 kubectl port-forward svc/vote 5000:5000 --address=0.0.0.0 &
 kubectl port-forward svc/kind-prometheus-grafana -n monitoring 3000:80 --address=0.0.0.0 &
 ```
-
+to get password of grafana:
+kubectl get secret -n monitoring kind-prometheus-grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+to set new password for grafana:
+kubectl patch secret -n monitoring kind-prometheus-grafana \ -p '{"data":{"admin-password":"'"$(echo -n NEWPASSWORD | base64)"'"}}'
 
 ---
 
